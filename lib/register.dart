@@ -112,6 +112,22 @@ class _MyRegisterState extends State<MyRegister> {
                         child: IconButton(
                           color: Colors.white,
                           onPressed: () async {
+                            if(_emailController.text.isNotEmpty)
+                              {
+                                if(_passwordController.text.isNotEmpty)
+                                  {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        snackBarContent("Registration completed!!!!!!"));
+                                  }
+                                else{
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      snackBarContent("Please enter Password"));
+                                }
+                              }
+                            else{
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  snackBarContent("Please enter Email Address"));
+                            }
                             print("Email: ${_emailController.text}");
                             print("Password: ${_passwordController.text}");
 
@@ -150,4 +166,10 @@ class _MyRegisterState extends State<MyRegister> {
       ),
     );
   }
+  Widget snackBarContent(String snackText) {
+    return SnackBar(
+      content: Text(snackText),
+    );
+  }
+
 }

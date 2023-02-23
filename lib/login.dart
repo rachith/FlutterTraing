@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyLogin extends StatefulWidget {
@@ -87,18 +88,35 @@ class _MyLoginState extends State<MyLogin> {
                           final prefs = await SharedPreferences.getInstance();
                           email = prefs.get("email");
                           password = prefs.get("pswd");
-
                           print(email);
                           print(password);
 
-                          if (_emailController.text == email) {
-                            if (_passwordController.text == password) {
-                              Navigator.pushNamed(context, 'profile');
+                          if (_emailController.text.isNotEmpty) {
+                            if (_passwordController.text.isNotEmpty) {
+                              if (_emailController.text == email) {
+                                if (_passwordController.text == password) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      snackBarContent(
+                                          "Login completed!!!!!!!!!!"));
+                                  Navigator.pushNamed(context, 'profile');
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      snackBarContent(
+                                          "password entered wrong"));
+                                 // displayToast("password entered wrong");
+                                }
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    snackBarContent("Email entered wrong"));
+                               // displayToast("Email entered wrong");
+                              }
                             } else {
-                              print("password entered wrong");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  snackBarContent("Please enter Password"));
                             }
                           } else {
-                            print("Email entered wrong");
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                snackBarContent("Please enter Email Address"));
                           }
 
                           //
@@ -146,4 +164,23 @@ class _MyLoginState extends State<MyLogin> {
       ),
     );
   }
+
+  Widget snackBarContent(String snackText) {
+    return SnackBar(
+      content: Text(snackText),
+    );
+  }
+
+/*  void displayToast(String toastText){
+     Fluttertoast.showToast(
+        msg: toastText,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }*/
+
 }

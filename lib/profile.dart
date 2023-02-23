@@ -1,5 +1,6 @@
 import 'package:example_training/example/my_app.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
 
@@ -13,6 +14,29 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String email="", password="";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+  getData();
+    super.initState();
+  }
+
+  getData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      email = prefs.get("email");
+      password = prefs.get("pswd");
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
 
   //This is profile page build widget
   @override
@@ -37,11 +61,19 @@ class _ProfilePageState extends State<ProfilePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Counter value:',
+              'Email Address',
               style: TextStyle(color: Colors.black,fontSize: 16.0),
             ),
             Text(
-              '${widget.counter}',
+              email,
+              style: TextStyle(color: Colors.amberAccent,fontSize: 20.0),
+            ),
+            Text(
+              'Password',
+              style: TextStyle(color: Colors.black,fontSize: 16.0),
+            ),
+            Text(
+              password,
               style: TextStyle(color: Colors.amberAccent,fontSize: 20.0),
             ),
           ],
