@@ -1,4 +1,6 @@
+import 'package:example_training/show_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -95,9 +97,8 @@ class _MyLoginState extends State<MyLogin> {
                             if (_passwordController.text.isNotEmpty) {
                               if (_emailController.text == email) {
                                 if (_passwordController.text == password) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      snackBarContent(
-                                          "Login completed!!!!!!!!!!"));
+                                  ShowToast.showToast("Login completed!!!!!!!!!!");
+                                  prefs.setBool("login", true);
                                   Navigator.pushNamed(context, 'profile');
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -171,16 +172,6 @@ class _MyLoginState extends State<MyLogin> {
     );
   }
 
-/*  void displayToast(String toastText){
-     Fluttertoast.showToast(
-        msg: toastText,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );
-  }*/
+
 
 }

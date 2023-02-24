@@ -1,4 +1,5 @@
 import 'package:example_training/example/my_app.dart';
+import 'package:example_training/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -80,8 +81,11 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
         floatingActionButton: FloatingActionButton(
-          onPressed:(){
-            Navigator.pop(context);
+          onPressed:() async {
+            ShowToast.showToast("You have logged out!!!!");
+            final prefs = await SharedPreferences.getInstance();
+            prefs.setBool("login", false);
+            Navigator.pushNamed(context, 'myLogin');
           },
           tooltip: 'back',
           child: Icon(Icons.arrow_back),

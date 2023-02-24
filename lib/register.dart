@@ -1,3 +1,4 @@
+import 'package:example_training/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -116,8 +117,8 @@ class _MyRegisterState extends State<MyRegister> {
                               {
                                 if(_passwordController.text.isNotEmpty)
                                   {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        snackBarContent("Registration completed!!!!!!"));
+                                    ShowToast.showToast("Registration completed!!!!!!");
+                                    Navigator.pushNamed(context, 'myLogin');
                                   }
                                 else{
                                   ScaffoldMessenger.of(context).showSnackBar(
