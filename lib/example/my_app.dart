@@ -1,4 +1,4 @@
-import 'package:example_training/profile.dart';
+import 'package:flutter_training/sharedPrefLogin/profile.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {

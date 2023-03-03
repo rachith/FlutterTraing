@@ -1,4 +1,4 @@
-name: example_training
+name: flutter_training
 description: A new Flutter training project.
 
 # The following line prevents the package from being accidentally published to
@@ -27,8 +27,14 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  shared_preferences: ^2.0.5
+  cupertino_icons:
+  shared_preferences:
+  fluttertoast:
+  firebase_core: ^2.7.0
+  firebase_auth: ^4.2.9
+  google_sign_in: ^6.0.2
+  http: ^0.13.5
+
 
 dev_dependencies:
   flutter_test:
