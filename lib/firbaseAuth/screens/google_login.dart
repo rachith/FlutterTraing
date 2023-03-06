@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert' show json;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_training/firbaseAuth/models/user_data.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,6 +26,7 @@ class GoogleLogin extends StatefulWidget {
 class SignInDemoState extends State<GoogleLogin> {
   GoogleSignInAccount _currentUser;
   String _contactText = '';
+  UserData usr;
 
   @override
   void initState() {
@@ -31,6 +34,7 @@ class SignInDemoState extends State<GoogleLogin> {
     _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
       setState(() {
         _currentUser = account;
+        storeData();
       });
       if (_currentUser != null) {
         _handleGetContact(_currentUser);
@@ -39,7 +43,23 @@ class SignInDemoState extends State<GoogleLogin> {
     _googleSignIn.signInSilently();
   }
 
+  Future<void> storeData() async {
+    await FirebaseFirestore.instance.collection("Users").doc(_currentUser.id).set({
+      'Name': _currentUser.displayName,
+      'email': _currentUser.email,
+      'profile_image': _currentUser.photoUrl}).then((value) => {
+      print("Data has been added")
+    });
+  }
+
   Future<void> _handleGetContact(GoogleSignInAccount user) async {
+
+    await FirebaseFirestore.instance.collection("Users").doc(_currentUser.id).get().then((value) =>{
+
+     usr = UserData.fromJson(value.data()),
+
+      print("UserEmail: ${usr.email}")
+    });
     setState(() {
       _contactText = 'Loading contact info...';
     });

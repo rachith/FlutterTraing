@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_training/sharedPrefLogin/show_toast.dart';
 
@@ -21,6 +22,12 @@ class FireAuth {
       await user.updateProfile(displayName: name);
       await user.reload();
       user = auth.currentUser;
+
+      await FirebaseFirestore.instance.collection("Users").doc(user.uid).set({
+            'Name': user.displayName,
+            'email': user.email}).then((value) => {
+              print("Data has been added")
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
        // print('The password provided is too weak.');
