@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:flutter_training/firbaseAuth/models/cat_fact_data.dart';
 import 'package:flutter_training/firbaseAuth/utils/fire_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,13 +18,32 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   bool _isSendingVerification = false;
   bool _isSigningOut = false;
-
+  final dio = Dio();
   User _currentUser;
+  CatFactData cfd;
+
 
   @override
   void initState() {
     _currentUser = widget.user;
+    getData();
     super.initState();
+  }
+
+  void getData(){
+
+    dio.get("https://catfact.ninja/fact").then((value) {
+
+      print("APIData:  ${value.data}");
+
+      cfd = CatFactData.fromJson(value.data);
+
+      print("APIParameterFact:  ${cfd.fact}");
+
+      print("APIParameterLength:  ${cfd.length}");
+
+    });
+    
   }
 
   @override
